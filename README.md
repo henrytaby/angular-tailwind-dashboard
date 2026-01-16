@@ -114,3 +114,20 @@ TailAdmin Angular ships with a rich set of **ready-to-use dashboard features**:
 - **Bug Fix**: Resolved `NG0100` ExpressionChangedAfterItHasBeenCheckedError in `PieChartTwoComponent`.
 - **Bug Fix**: Fixed `NG8113` warning in `AddApiKeyModalComponent` by removing unused imports.
 - **Cleanup**: Removed unused imports and optimized code across various components.
+
+### v1.1.0 (2026-01-16) - Stability & Health Check Update
+
+- **Safe Layout Migration**:
+  - Migrated `AppHeader`, `AppSidebar`, `AppLayout`, and `Backdrop` to use modern Angular `inject()` architecture.
+  - Implemented strict **SSR/Environment Guards** (`typeof document !== 'undefined'`) for all window/document access, preventing "blank screen" crashes in server-side or strict environments.
+- **Bug Fixes**:
+  - **Fixed NG0100**: Resolved `ExpressionChangedAfterItHasBeenCheckedError` in `AppSidebarComponent` by properly scheduling view updates.
+  - **Fixed Layout Thrashing**: Optimized sidebar menu calculation to run in `ngAfterViewInit`, eliminating "Layout was forced" browser warnings.
+  - **Refactored Unsafe Globals**: Secured `ThemeService`, `Modal`, `TableDropdown`, and `Dropdown` against direct DOM access errors.
+  - **Fixed Memory Leak**: Corrected event listener cleanup in `TableDropdownComponent`.
+- **UI/UX Improvements**:
+  - **Responsive Fix**: Corrected `NotificationDropdown` positioning to prevent getting cut off on mobile screens.
+  - **Sidebar Logo Logic**: Fixed regression where sidebar logo container was hidden incorrectly in collapsed mode.
+- **Code Quality**:
+  - Achieved **0 Lint Errors** (fixed strict mode accessibility and type issues).
+  - Confirmed **AOT Build Compatibility** (fixed private properties usage in templates).
