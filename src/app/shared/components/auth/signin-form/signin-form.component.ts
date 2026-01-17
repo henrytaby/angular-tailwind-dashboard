@@ -1,5 +1,4 @@
-
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { LabelComponent } from '../../form/label/label.component';
 import { CheckboxComponent } from '../../form/input/checkbox.component';
 import { ButtonComponent } from '../../ui/button/button.component';
@@ -16,11 +15,21 @@ import { FormsModule } from '@angular/forms';
     InputFieldComponent,
     RouterModule,
     FormsModule
-],
+  ],
   templateUrl: './signin-form.component.html',
-  styles: ``
+  styles: `
+    :host {
+      display: flex;
+      flex: 1;
+      width: 100%;
+    }
+  `
 })
 export class SigninFormComponent {
+  @Output() signIn = new EventEmitter<{ email: string; password: string }>();
+  
+  isLoading = input<boolean>(false);
+  errorMessage = input<string | null>(null);
 
   showPassword = false;
   isChecked = false;
@@ -33,8 +42,8 @@ export class SigninFormComponent {
   }
 
   onSignIn() {
-    console.log('Email:', this.email);
-    console.log('Password:', this.password);
-    console.log('Remember Me:', this.isChecked);
+    if (this.email && this.password) {
+      this.signIn.emit({ email: this.email, password: this.password });
+    }
   }
 }
